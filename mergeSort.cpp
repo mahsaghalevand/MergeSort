@@ -11,8 +11,8 @@
 
 using namespace std;
 
-void mergeSort(vector<int>&, int, int);
-void merge(vector<int>&, int start, int middle, int end);
+void mergeSort(vector<int>& theVector, int start, int end);
+void merge(vector<int>& theVector, int start, int middle, int end);
 
 int main()
 {
@@ -55,38 +55,38 @@ void mergeSort(vector<int> &theVector, int start, int end)
 void merge(vector<int>&theVector, int start, int middle, int end)
 {
   vector<int> merge;
-  int i = 0;
-  int j = 1;
+  int i = start;
+  int j = middle+1;
 
-  while ((start+i) <= middle && (middle + j) <= end)
+  while (i <= middle &&  j <= end)
   {
-    if (theVector.at(start + i) > theVector.at(middle + j))
+    if (theVector.at(i) > theVector.at(j))
     {
-      merge.push_back(theVector.at(middle + j));
+      merge.push_back(theVector.at(j));
       j++;
     }
 
-    else if (theVector.at(start + i) <= theVector.at(middle + j))
+    else if (theVector.at(i) <= theVector.at(j))
     {
-      merge.push_back(theVector.at(start + i));
+      merge.push_back(theVector.at(i));
       i++;
     }
 
-    if ((start + i) > middle && (middle + j) <= end)
+    if (i > middle && j <= end)
     {
-      while ((middle + j) <= end)
+      while (j <= end)
       {
-        merge.push_back(theVector.at(middle + j));
+        merge.push_back(theVector.at(j));
         j++;
       }
       break;
     }
 
-    if (i <= middle && (middle + j) > end)
+    if (i <= middle && j > end)
     {
-      while ((start+i) <= middle)
+      while (i <= middle)
       {
-        merge.push_back(theVector.at(start + i));
+        merge.push_back(theVector.at(i));
         i++;
       }
       break;
@@ -95,12 +95,9 @@ void merge(vector<int>&theVector, int start, int middle, int end)
 
   vector<int>::iterator it1 = merge.begin();
   vector<int>::iterator it2  = theVector.begin() + start;
-
-  while(it1 != merge.end())
-  {
+  for(; it1 != merge.end(); it1++ , it2++)
     *it2 = *it1;
-    it1++;
-    it2++;
-  }
+
+
 
 }
